@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+      <h1 class="logo">Tic Tac Toe</h1>
+      <p class="subtitle">2-Player Local Game</p>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+      <!-- Player Name Setup -->
+      <section class="setup-section" id="setupSection">
+        <div class="setup-card">
+          <h2>Enter Player Names</h2>
+          <div class="input-group">
+            <label for="player1Name">
+              <span class="player-badge x-badge">X</span> Player 1
+            </label>
+            <input
+              type="text"
+              id="player1Name"
+              placeholder="Player 1"
+              maxlength="20"
+              autocomplete="off"
+            />
+          </div>
+          <div class="input-group">
+            <label for="player2Name">
+              <span class="player-badge o-badge">O</span> Player 2
+            </label>
+            <input
+              type="text"
+              id="player2Name"
+              placeholder="Player 2"
+              maxlength="20"
+              autocomplete="off"
+            />
+          </div>
+          <button class="btn btn-primary" id="startGameBtn">Start Game</button>
+        </div>
+      </section>
+
+      <!-- Game Section -->
+      <section class="game-section hidden" id="gameSection">
+
+        <!-- Score Board -->
+        <div class="scoreboard">
+          <div class="score-card" id="scoreCardX">
+            <span class="score-label" id="scoreNameX">Player 1</span>
+            <span class="score-badge x-badge">X</span>
+            <span class="score-value" id="scoreX">0</span>
+          </div>
+          <div class="score-card draws">
+            <span class="score-label">Draws</span>
+            <span class="score-value" id="scoreDraws">0</span>
+          </div>
+          <div class="score-card" id="scoreCardO">
+            <span class="score-badge o-badge">O</span>
+            <span class="score-label" id="scoreNameO">Player 2</span>
+            <span class="score-value" id="scoreO">0</span>
+          </div>
+        </div>
+
+        <!-- Turn Indicator -->
+        <div class="turn-indicator" id="turnIndicator">
+          <span id="turnText">Player 1's Turn</span>
+          <span class="turn-symbol" id="turnSymbol">X</span>
+        </div>
+
+        <!-- Game Board -->
+        <div class="board-wrapper">
+          <div class="board" id="board" role="grid" aria-label="Tic Tac Toe Board">
+            <button class="cell" data-index="0" aria-label="Cell 1" role="gridcell"></button>
+            <button class="cell" data-index="1" aria-label="Cell 2" role="gridcell"></button>
+            <button class="cell" data-index="2" aria-label="Cell 3" role="gridcell"></button>
+            <button class="cell" data-index="3" aria-label="Cell 4" role="gridcell"></button>
+            <button class="cell" data-index="4" aria-label="Cell 5" role="gridcell"></button>
+            <button class="cell" data-index="5" aria-label="Cell 6" role="gridcell"></button>
+            <button class="cell" data-index="6" aria-label="Cell 7" role="gridcell"></button>
+            <button class="cell" data-index="7" aria-label="Cell 8" role="gridcell"></button>
+            <button class="cell" data-index="8" aria-label="Cell 9" role="gridcell"></button>
+          </div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+          <button class="btn btn-secondary" id="newRoundBtn">New Round</button>
+          <button class="btn btn-outline" id="resetGameBtn">Reset Scores</button>
+          <button class="btn btn-outline" id="changePlayersBtn">Change Players</button>
+        </div>
+
+        <!-- Save Game Button -->
+        <div class="save-section">
+          <button class="btn btn-save" id="saveGameBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Game to Database
+          </button>
+          <span class="save-status" id="saveStatus"></span>
+        </div>
+      </section>
+
+      <!-- Leaderboard Section -->
+      <section class="leaderboard-section" id="leaderboardSection">
+        <div class="leaderboard-header">
+          <h2>Leaderboard</h2>
+          <button class="btn btn-sm" id="refreshLeaderboardBtn">Refresh</button>
+        </div>
+        <div class="leaderboard-table-wrapper">
+          <table class="leaderboard-table" id="leaderboardTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Draws</th>
+                <th>Games</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              <tr>
+                <td colspan="6" class="no-data">No records yet. Play and save a game!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Recent Games Section -->
+      <section class="recent-games-section">
+        <div class="leaderboard-header">
+          <h2>Recent Games</h2>
+        </div>
+        <div class="leaderboard-table-wrapper">
+          <table class="leaderboard-table" id="recentGamesTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Player X</th>
+                <th>Player O</th>
+                <th>Winner</th>
+                <th>Rounds</th>
+              </tr>
+            </thead>
+            <tbody id="recentGamesBody">
+              <tr>
+                <td colspan="5" class="no-data">No recent games found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== WIN MODAL ===== -->
+    <div class="modal-overlay hidden" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal">
+        <div class="modal-icon" id="modalIcon">🎉</div>
+        <h2 class="modal-title" id="modalTitle">Player 1 Wins!</h2>
+        <p class="modal-message" id="modalMessage">Congratulations!</p>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="modalNextRound">Next Round</button>
+          <button class="btn btn-outline" id="modalClose">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+      <p>Tic Tac Toe &copy; <span id="footerYear"></span> — 2 Player Local Game</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
